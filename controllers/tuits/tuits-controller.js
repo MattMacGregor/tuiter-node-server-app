@@ -11,13 +11,13 @@ const updateTuit = async (req, res) => {
   const tuitdIdToUpdate = req.params.tid;
   const updates = req.body;
   const status = await tuitsDao.updateTuit(tuitdIdToUpdate, updates);
-  res.sendStatus(status);
+  res.sendStatus((status.acknowledged && status.modifiedCount == 1 && status.matchedCount == 1) ? 200 : 403);
 }
 
 const deleteTuit = async (req, res) => {
   const tuitdIdToDelete = req.params.tid;
   const status = await tuitsDao.deleteTuit(tuitdIdToDelete);
-  res.sendStatus(status);
+  res.sendStatus((status.acknowledged && status.deletedCount == 1) ? 200 : 403);
 }
 
 const createTuit = async (req, res) => {
